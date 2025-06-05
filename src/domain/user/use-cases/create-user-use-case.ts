@@ -1,18 +1,26 @@
-import { PrismaUserRepository } from "../repositories/prisma/prisma-user-repository";
+// create-user-use-case.ts
+import { User } from "@prisma/client";
 import { UserRepository } from "../repositories/user-repository";
-import { UserParamsFunctionRepository } from "../types/params/user";
-import { UserReturnFunctionRepository } from "../types/return/user";
+
+interface CreateUserUseCaseRequest {
+    nome: string;
+    email: string;
+    senha: string;
+    telefone: string;
+    role: string;
+
+  }
+interface CreateUserUseCaseResponse{
+  user: User
+}
+
 
 export class CreateUserUseCase {
-    constructor(
-        private userRepository: UserRepository
-    ){}
-  async execute(data: UserParamsFunctionRepository["createUser"]): Promise<UserReturnFunctionRepository["getUser"]> {
+  constructor(private userRepository: UserRepository) {}
 
-    const user = await this.userRepository.create({
-        ...data,  
-    })
+  async execute(data: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
+    const user = await this.userRepository.create(data);
 
-     return user 
+    return {user};
   }
 }

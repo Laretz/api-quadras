@@ -5,4 +5,5 @@ export interface UserRepository {
     create(user: UserParamsFunctionRepository["createUser"]): Promise<UserReturnFunctionRepository["getUser"]>
     update(id: string, data: UserParamsFunctionRepository["updateUser"]): Promise<UserReturnFunctionRepository["getUser"]>
     getAllUsers(): Promise<UserReturnFunctionRepository["getUser"][]>
+    delete(id: string): Promise<void>; 
 }

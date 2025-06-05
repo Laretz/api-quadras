@@ -30,4 +30,19 @@ export class PrismaUserRepository implements UserRepository {
 
         return users;
     }
+
+    async getById(id: string): Promise<UserReturnFunctionRepository["getUser"] | null> {
+    const user = await prisma.user.findUnique({
+        where: { id },
+        include: { reservas: true }
+    });
+    return user;
+}
+
+async delete(id: string): Promise<void> {
+    await prisma.user.delete({
+        where: { id }
+    });
+}
+
 }
