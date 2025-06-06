@@ -4,7 +4,7 @@ import { HttpStatusCode } from "axios";
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-export const schemaCreate = z.object({
+export const schemaCreateUser = z.object({
     nome: z.string(),
     email: z.string().email(),
     senha: z.string().min(6),
@@ -14,7 +14,7 @@ export const schemaCreate = z.object({
 
 export async function createUserController(req: FastifyRequest, res: FastifyReply) { 
     
-    const { nome, email, senha, telefone, role } = schemaCreate.parse(req.body)
+    const { nome, email, senha, telefone, role } = schemaCreateUser.parse(req.body)
 
     console.log(nome, email)
     try {
@@ -22,12 +22,13 @@ export async function createUserController(req: FastifyRequest, res: FastifyRepl
         const createUserUseCase = new CreateUserUseCase(userRepository);
         
         const user = await createUserUseCase.execute({ email, nome, senha, telefone, role });  
-     
-        return res.status(HttpStatusCode.Created).send({ user });
-    }catch (error) {
-    console.error('Erro ao criar usuário:', error);
-    return res.status(HttpStatusCode.InternalServerError).send({ message: "Erro ao criar usuário", error: (error as Error).message });
-}
-
-
+        return res.status(HttpStatusCode.Created).send( user );
+     } catch (error) {
+        console.log("CAIU AQI")
+        if(error instanceof Error){
+            return res.status(400).send({ message: error.message })
+        }
+      
+        throw error
+    }
 }
