@@ -12,7 +12,7 @@ export class GetScheduleUseCase{
     constructor (private scheduleRepository: ScheduleRepository){}
 
     async execute(id: string): Promise<GetSheduleUseCaseResponse>{
-        const scheduling = await this.scheduleRepository.getSchedule();
+        const scheduling = await this.scheduleRepository.getSchedule(id);
         return {scheduling};
     }
 }
