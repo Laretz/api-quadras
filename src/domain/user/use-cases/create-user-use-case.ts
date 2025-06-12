@@ -1,4 +1,3 @@
-// create-user-use-case.ts
 import { User } from "@prisma/client";
 import { UserRepository } from "../repositories/user-repository";
 
