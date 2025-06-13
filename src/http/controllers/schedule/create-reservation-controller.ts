@@ -1,5 +1,5 @@
 import { makeCreateScheduleUseCase } from "@/domain/reservation/@factories/make-create-schedule-use-case";
-import { CreateScheduleUseCase } from "@/domain/reservation/use-cases/create-reservation-use-case";
+import { CreateScheduleUseCase } from "@/domain/reservation/use-cases/create-schedule-use-case";
 import { HttpStatusCode } from "axios";
 import z from "zod";
 

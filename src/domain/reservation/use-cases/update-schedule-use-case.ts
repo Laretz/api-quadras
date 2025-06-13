@@ -1,4 +1,5 @@
 import { Schedule } from "@prisma/client";
+import { ScheduleRepository } from "../repositories/schedule-repository";
 
 
 interface UpdateScheduleUseCaseRequest{

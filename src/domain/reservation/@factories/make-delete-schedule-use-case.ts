@@ -1,4 +1,5 @@
-import { DeleteScheduleUseCase } from "../use-cases/delete-reservation-use-case";
+import { PrismaScheduleRepository } from "../repositories/prisma/prisma-schedule-repository";
+import { DeleteScheduleUseCase } from "../use-cases/delete-schedule-use-case";
 
 
 export function makeDeleteScheduleUseCase() {

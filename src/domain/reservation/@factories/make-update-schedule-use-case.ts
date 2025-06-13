@@ -1,4 +1,5 @@
-import { UpdateScheduleUseCase } from "../use-cases/update-reservation-use-case";
+import { PrismaScheduleRepository } from "../repositories/prisma/prisma-schedule-repository";
+import { UpdateScheduleUseCase } from "../use-cases/update-schedule-use-case";
 
 
 

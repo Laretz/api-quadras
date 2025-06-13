@@ -1,3 +1,5 @@
+import { ScheduleRepository } from "../repositories/schedule-repository";
+
 interface DeleteScheduleUseCaseRequest{
     id: string;
 }

@@ -1,9 +1,10 @@
 import { Schedule } from "@prisma/client";
+import { ScheduleRepository } from "../repositories/schedule-repository";
 
 
 interface CreateScheduleUseCaseRequest{
-    dataHoraInicio:  string;
-    dataHoraFim:     string;
+    dataHoraInicio:  Date;
+    dataHoraFim:     Date;
     status:          string;
     userId:          string;
     courtId:         string;
