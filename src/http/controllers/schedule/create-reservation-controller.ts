@@ -1,13 +1,14 @@
 import { makeCreateScheduleUseCase } from "@/domain/reservation/@factories/make-create-schedule-use-case";
 import { CreateScheduleUseCase } from "@/domain/reservation/use-cases/create-schedule-use-case";
 import { HttpStatusCode } from "axios";
+import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
 
 
 export const schemaCreateSchedule = z.object({
-  dataHoraInicio: z.string().datetime(),
-  dataHoraFim: z.string().datetime(),
+  dataHoraInicio: z.any(),
+  dataHoraFim: z.any(),
   status: z.string(),
   userId: z.string(),
   courtId: z.string(),

@@ -9,7 +9,7 @@ const schemaGetSchedule = z.object({
 
 export async function getScheduleController(req: FastifyRequest, res: FastifyReply) {
   try {
-    const { id } = schemaGetSchedule.parse(req.body); // <-- agora é body, não params
+    const { id } = schemaGetSchedule.parse(req.body);
 
     const getScheduleUseCase = makeGetScheduleUseCase();
     const { scheduling } = await getScheduleUseCase.execute(id);

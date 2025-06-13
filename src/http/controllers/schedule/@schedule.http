@@ -8,7 +8,7 @@ Content-Type: application/json
   "dataHoraInicio": "2025-06-12T14:00:00.000Z",
   "dataHoraFim": "2025-06-12T15:00:00.000Z",
   "status": "confirmado",
-  "userId": "USUARIO_ID_AQUI",
+  "userId": "ab0b48f1-6add-405e-8568-0d011b05848e",
   "courtId": "QUADRA_ID_AQUI"
 }
 

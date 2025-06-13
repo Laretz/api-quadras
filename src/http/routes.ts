@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify"
 import z from "zod";
 import { routesUser } from "./controllers/users/@routes";
+import { routesSchedule } from "./controllers/schedule/@routes";
 
 
 export const appRoutes = async (app: FastifyInstance) => {
@@ -20,5 +21,6 @@ export const appRoutes = async (app: FastifyInstance) => {
         api: "Online 🚀"
     });
   }),
-  routesUser(app)
+  routesUser(app),
+  routesSchedule(app)
 }
