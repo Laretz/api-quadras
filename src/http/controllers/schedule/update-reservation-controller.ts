@@ -3,7 +3,7 @@ import { z } from "zod";
 import { HttpStatusCode } from "axios";
 import { makeUpdateScheduleUseCase } from "@/domain/reservation/@factories/make-update-schedule-use-case";
 
-const schemaUpdateSchedule = z.object({
+export const schemaUpdateSchedule = z.object({
   id: z.string().uuid(),
   dataHoraInicio: z.string().datetime().optional(),
   dataHoraFim: z.string().datetime().optional(),

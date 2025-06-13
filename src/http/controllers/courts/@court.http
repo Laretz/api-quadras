@@ -1,0 +1,30 @@
+@baseURL = http://localhost:3333
+
+###
+# @name CreateCourt
+POST {{baseURL}}/courts
+Content-Type: application/json
+
+{
+  "nome": "Quadra A",
+  "tipo": "Futsal",
+  "localizacao": "Rua das Flores, 123"
+}
+
+###
+# @name GetAllCourts
+GET {{baseURL}}/courts
+
+### 
+# @name UpdateCourt
+PUT {{baseURL}}/courts/e7bec398-fe9c-4a55-b061-2836b887d604
+Content-Type: application/json
+
+{
+  "nome": "Quadra B - Atualizada",
+  "tipo": "Society"
+}
+
+### 
+# @name DeleteCourt
+DELETE {{baseURL}}/courts/11839959-50ff-43ce-907c-1867c593b022

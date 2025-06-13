@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
-import { updateScheduleController } from "./update-reservation-controller";
+import { schemaUpdateSchedule, updateScheduleController } from "./update-reservation-controller";
 import { deleteScheduleController } from "./delete-reservation-controller";
 import { getScheduleController } from "./get-reservation-controller";
 import { createScheduleController, schemaCreateSchedule } from "./create-reservation-controller";
@@ -9,12 +9,13 @@ import { createScheduleController, schemaCreateSchedule } from "./create-reserva
 // Schema de resposta
 const schemaScheduleResponse = z.object({
   id: z.string(),
-  dataHoraInicio: z.string().datetime(),
-  dataHoraFim: z.string().datetime(),
+  dataHoraInicio: z.any(),
+  dataHoraFim: z.any(),
   status: z.string(),
-  userId: z.string(),
-  courtId: z.string(),
+  user_id: z.string(),
+  court_id: z.string(),
 });
+
 
 export async function routesSchedule(app: FastifyInstance) {
   // CREATE
@@ -24,7 +25,7 @@ export async function routesSchedule(app: FastifyInstance) {
       tags: ["Reserva"],
       body: schemaCreateSchedule,
       response: {
-        201: schemaScheduleResponse,
+ 
         400: z.object({ message: z.string() }),
       },
     },
@@ -48,7 +49,7 @@ export async function routesSchedule(app: FastifyInstance) {
     schema: {
       description: "Atualiza dados de uma reserva",
       tags: ["Reserva"],
-      body: schemaCreateSchedule,
+      body: schemaUpdateSchedule,
       response: {
         200: schemaScheduleResponse,
         400: z.object({ message: z.string() }),
@@ -57,11 +58,13 @@ export async function routesSchedule(app: FastifyInstance) {
   }, updateScheduleController);
 
   // DELETE
-  app.delete("/schedules", {
+  app.post("/schedules/delete", {
     schema: {
       description: "Remove uma reserva de quadra",
       tags: ["Reserva"],
-      body: z.object({ id: z.string() }),
+      body: z.object({
+        id: z.string()
+      }),
       response: {
         204: z.null(),
         400: z.object({ message: z.string() }),

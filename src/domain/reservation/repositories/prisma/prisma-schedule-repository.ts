@@ -8,18 +8,26 @@ import { ScheduleReturnFunctionRepository } from "../../types/return/schedule";
 
 export class PrismaScheduleRepository implements ScheduleRepository {
     async create(schedule: ScheduleParamsFunctionRepository["createSchedule"]): Promise<ScheduleReturnFunctionRepository["getSchedule"]> {
-        const { userId, courtId, ...rest } = schedule;
+  const { userId, courtId, ...rest } = schedule;
 
-        const createdSchedule = await prisma.schedule.create({
-            data: {
-                ...rest,
-                user: { connect: { id: userId } },
-                court: { connect: { id: courtId } }
-            }
-        });
+  const createdSchedule = await prisma.schedule.create({
+    data: {
+      ...rest,
+      user: { connect: { id: userId } },
+      court: { connect: { id: courtId } },
+    },
+    include: {
+      user: {
+        select: {
+          nome: true,
+        },
+      },
+      court: true,
+    },
+  });
 
-        return createdSchedule;
-    }
+  return createdSchedule;
+}
 
     async update(id: string, data: ScheduleParamsFunctionRepository["updateSchedule"]): Promise <ScheduleReturnFunctionRepository["getSchedule"]>{
         const updatedSchedule = await prisma.schedule.update({

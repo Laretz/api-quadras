@@ -9,21 +9,31 @@ export const schemaCreateCourt = z.object({
     tipo: z.string(),
     localizacao: z.string()
 })
+export async function createCourtController(req: FastifyRequest, res: FastifyReply) {
+  try {
+    const { nome, tipo, localizacao } = schemaCreateCourt.parse(req.body);
+    console.log("Body recebido:", req.body);
 
-export async function createCourtController(req: FastifyRequest, res: FastifyReply){
+    const courtRepository = new PrismaCourtRepository();
+    const createCourtUseCase = new CreateCourtUseCase(courtRepository);
 
-    const{nome, tipo, localizacao } = schemaCreateCourt.parse(req.body)
+    const court = await createCourtUseCase.execute({ nome, tipo, localizacao });
 
-    console.log(nome, tipo)
-    try {
-        const courtRepository = new PrismaCourtRepository();
-        const createCourtUseCase = new CreateCourtUseCase(courtRepository);
+    return res.status(HttpStatusCode.Created).send( court );
 
-        const court = await createCourtUseCase.execute({nome, tipo, localizacao});
-
-        return res.status(HttpStatusCode.Created).send({court});
-    }catch (error){
-        console.error('Erro ao criar quadra:', error);
-        return res.status(HttpStatusCode.InternalServerError).send({ message: "Erro ao criar quadra", error: (error as Error).message });
+  } catch (error) {
+    console.error("Erro ao criar quadra:", error);
+    if (error instanceof z.ZodError) {
+      return res.status(400).send({
+        message: "Erro de validação",
+        issues: error.flatten(),
+      });
     }
+
+    console.error("Erro inesperado:", error);
+    return res.status(500).send({
+      message: "Erro interno no servidor",
+      error: error instanceof Error ? error.message : error,
+    });
+  }
 }

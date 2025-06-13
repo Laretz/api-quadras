@@ -9,7 +9,7 @@ const schemaDeleteSchedule = z.object({
 
 export async function deleteScheduleController(req: FastifyRequest, res: FastifyReply) {
   try {
-    const { id } = schemaDeleteSchedule.parse(req.params);
+    const { id } = schemaDeleteSchedule.parse(req.body);
 
     const deleteScheduleUseCase = makeDeleteScheduleUseCase();
     await deleteScheduleUseCase.execute(id);

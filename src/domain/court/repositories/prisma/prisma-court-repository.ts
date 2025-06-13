@@ -18,13 +18,23 @@ export class PrismaCourtRepository implements CourtRepository{
         return courts
     }
     async create(court: CourtParamsFunctionRepository["createCourt"]): Promise<CourtReturnFunctionRepository["getCourt"]> {
-        const createdCourt = await prisma.court.create({
-            data: {
-                ...court
-            }
-        })
-        return createdCourt
-    }
+  
+      try {
+    console.log("COURT ENVIADO AO PRISMA:", court);
+    const createdCourt = await prisma.court.create({
+      data: {
+        ...court
+      }
+    });
+    return createdCourt;
+  } catch (error) {
+    console.error("Erro ao criar quadra no prisma:", JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
+
+    throw error;  // não perde o erro
+  }
+}
+
+
     async update(id: string, data: CourtParamsFunctionRepository["updateCourt"]): Promise<CourtReturnFunctionRepository["getCourt"]> {
         const updatedCourt = await prisma.court.update({
             where: { id },
